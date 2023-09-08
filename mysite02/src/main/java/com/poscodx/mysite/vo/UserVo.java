@@ -1,12 +1,21 @@
 package com.poscodx.mysite.vo;
 
 public class UserVo {
+	private Long no;
 	private String name;
 	private String email;
 	private	String password;
 	private String gender;
 	public String getName() {
 		return name;
+	}
+	
+	
+	public Long getNo() {
+		return no;
+	}
+	public void setNo(Long no) {
+		this.no = no;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -31,7 +40,8 @@ public class UserVo {
 	}
 	@Override
 	public String toString() {
-		return "UserVo [name=" + name + ", email=" + email + ", password=" + password + ", gender=" + gender + "]";
+		return "UserVo [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
+				+ gender + "]";
 	}
 	
 	

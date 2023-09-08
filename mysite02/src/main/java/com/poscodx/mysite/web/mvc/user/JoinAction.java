@@ -26,8 +26,8 @@ public class JoinAction implements Action {
 		userVo.setGender(gender);
 		
 		new UserDao().insert(userVo);
+		
 		response.sendRedirect(request.getContextPath()+"/user?a=joinsuccess");
-
 	}
 
 }
