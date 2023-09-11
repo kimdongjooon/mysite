@@ -20,6 +20,7 @@ public class GuestbookController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("a");
 		
+		
 		if("add".equals(action)) {
 			String Name = request.getParameter("name");
 			String Password = request.getParameter("password");
@@ -46,6 +47,8 @@ public class GuestbookController extends HttpServlet {
 			
 			response.sendRedirect(request.getContextPath()+"/guestbook");
 		}else {
+			request.setAttribute("list", new GuestBookDao().findAll());
+			
 			request.getRequestDispatcher("/WEB-INF/views/guestbook/index.jsp")
 			.forward(request, response);
 		}

@@ -1,25 +1,26 @@
-<%@page import="com.poscodx.mysite.vo.GuestBookVo"%>
-<%@page import="com.poscodx.mysite.dao.GuestBookDao"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
-List<GuestBookVo> list = new GuestBookDao().findAll();
+	pageContext.setAttribute("newline","\n");
 %>
+<%-- <c:set var="newline" value="\n" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/assets/css/guestbook.css"
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook">
-				<form action="<%=request.getContextPath()%>/guestbook" method="post">
+				<form action="${pageContext.request.contextPath}/guestbook" method="post">
 					<input type="hidden" name="a" value="add">
 					<table border=1 width=500>
 						<tr>
@@ -38,24 +39,22 @@ List<GuestBookVo> list = new GuestBookDao().findAll();
 				</form>
 				<br>
 				<table width=510 border=1>
-					<%
-					for (GuestBookVo vo : list) {
-					%>
-
+					<c:forEach items="${list }" var ="vo">
 					<tr>
-						<td><%=vo.getNo()%></td>
-						<td><%=vo.getName()%></td>
-						<td><%=vo.getDate()%></td>
+						<td>${vo.no }</td>
+						<td>${vo.name }</td>
+						<td>${vo.date }</td>
 						<td><a
-							href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
+							href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
 					</tr>
 					<tr>
-						<td colspan=4><%=vo.getContents()%></td>
+						<td colspan=4>
+							${fn:replace(vo.contents, newline , "<br>") }
+						</td>
 					</tr>
 
-					<%
-					}
-					%>
+					
+					</c:forEach>
 				</table>
 				<br>
 				</li>
@@ -63,8 +62,8 @@ List<GuestBookVo> list = new GuestBookDao().findAll();
 			</div>
 		</div>
 
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+        <c:import url="/WEB-INF/views/includes/footer.jsp"/>
 
 
 
