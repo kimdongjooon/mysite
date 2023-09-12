@@ -6,6 +6,7 @@
 <%
 	pageContext.setAttribute("newline","\n");
 %>
+<!-- 근데 지원을 개행(\n)을 지원안해줌. 그래서 스크립트를 사용해야됨 -->
 <%-- <c:set var="newline" value="\n" /> --%>
 <!DOCTYPE html>
 <html>
@@ -38,24 +39,25 @@
 					</table>
 				</form>
 				<br>
-				<table width=510 border=1>
-					<c:forEach items="${list }" var ="vo">
-					<tr>
-						<td>${vo.no }</td>
-						<td>${vo.name }</td>
-						<td>${vo.date }</td>
-						<td><a
-							href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
-					</tr>
-					<tr>
-						<td colspan=4>
-							${fn:replace(vo.contents, newline , "<br>") }
-						</td>
-					</tr>
-
-					
-					</c:forEach>
-				</table>
+					<table width=510 border=1>
+						<c:set var="count" value="${fn:length(list) }" />
+						<c:forEach items="${list }" var ="vo" varStatus="status">
+							<tr>
+								<td>[${count - status.index }]</td>
+								<td>${vo.name }</td>
+								<td>${vo.date }</td>
+								<td><a
+									href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
+							</tr>
+							<tr>
+								<td colspan=4>
+									${fn:replace(vo.contents, newline , "<br>") }
+								</td>
+							</tr>
+	
+						
+						</c:forEach>
+					</table>
 				<br>
 				</li>
 				</ul>
