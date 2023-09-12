@@ -16,11 +16,12 @@ public class UpdateformAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// Access Control (접근제어)
+		// Access Control (접근제어) 보안, 인증체크 
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
-			response.sendRedirect(request.getContextPath()+"/user?a=loginform");
+//			response.sendRedirect(request.getContextPath()+"/user?a=loginform");
+			response.sendRedirect(request.getContextPath());
 		}
 		////////////////////////////////////////////////////////////////////////////
 		
