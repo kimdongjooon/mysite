@@ -25,7 +25,7 @@ public class ModifyAction implements Action {
 		
 		new BoardDao().TitleContentUpdate(boardvo);
 		
-		response.sendRedirect(request.getContextPath()+"/board");
+		response.sendRedirect(request.getContextPath()+"/board?a=view&no="+no);
 		
 		
 

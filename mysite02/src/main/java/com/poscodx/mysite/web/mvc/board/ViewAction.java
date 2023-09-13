@@ -17,7 +17,13 @@ public class ViewAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		int no = Integer.parseInt(request.getParameter("no"));
-		
+		int hit = 0;
+		try {
+			hit = Integer.parseInt(request.getParameter("hit"));
+			new BoardDao().updateHitByNo(no,hit);
+		}catch (Exception ex) {
+			
+		}finally {
 			
 //		List<BoardVo> list = new BoardDao().boardListFindAll();
 		BoardVo boardvo = new BoardDao().boardFindByNo(no);
@@ -27,7 +33,7 @@ public class ViewAction implements Action {
 			.getRequestDispatcher("/WEB-INF/views/board/view.jsp")
 			.forward(request, response);
 	
-		
+		}
 		
 //		WebUtil.forward("board/view",request,response);
 

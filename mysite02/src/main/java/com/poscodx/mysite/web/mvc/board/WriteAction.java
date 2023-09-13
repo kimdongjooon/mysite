@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.vo.BoardVo;
+import com.poscodx.mysite.vo.PageVo;
 import com.poscodx.mysite.vo.UserVo;
 import com.poscodx.web.mvc.Action;
 
@@ -25,9 +26,11 @@ public class WriteAction implements Action {
 		// 사용자의 user no 받기
 		UserVo authUser = (UserVo) request.getSession(true).getAttribute("authUser");
 		
+		
 		// 댓글일때 실행. 
 		try {
 			mode = request.getParameter("mode");
+			
 		}catch (Exception ex) {
 			
 		}finally {
@@ -36,8 +39,9 @@ public class WriteAction implements Action {
 			if("review".equals(mode)) { // 댓글일때.
 				
 				g_No = Integer.parseInt(request.getParameter("g_No"));
-				o_No = new BoardDao().maxO_NoByG_NoAndUserNo(g_No,authUser)+1;
+				o_No = Integer.parseInt(request.getParameter("o_No"))+1;
 				depth = Integer.parseInt(request.getParameter("depth"))+1;
+				new BoardDao().updateO_NoByG_NoAndO_No(g_No,o_No);
 			}
 			else { // 새글일때,
 				// board db에서 g_no 가져오기. +1하여 다음 새로운 글로 구현.
@@ -68,8 +72,9 @@ public class WriteAction implements Action {
 		
 		new BoardDao().insert(boardvo);
 		
+		PageVo pagevo = (PageVo) request.getSession(true).getAttribute("pagevo");
 		// 게시판으로 돌아가기.
-		response.sendRedirect(request.getContextPath()+"/board");
+		response.sendRedirect(request.getContextPath()+"/board?p="+ pagevo.getCurrentPage() );
 		}
 	}
 

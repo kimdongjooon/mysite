@@ -13,6 +13,7 @@ import java.util.List;
 import com.poscodx.mysite.vo.BoardListVo;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.GuestBookVo;
+import com.poscodx.mysite.vo.PageVo;
 import com.poscodx.mysite.vo.UserVo;
 
 public class BoardDao {
@@ -128,33 +129,66 @@ public class BoardDao {
 	
 	
 	// 게시물 리스트 (select) 리스트형식으로 리턴.
-	public List<BoardVo> boardListFindAll() {
+	public List<BoardVo> boardListFindFiveBoard(String kwd, int page) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<BoardVo> result= new ArrayList<>();
-		
+		page = (page-1)*5;
+//		System.out.println("kwd:"+kwd);
+//		System.out.println("page:"+page);
+		if(kwd == null) {
+			kwd="";
+		}
+//		System.out.println("kwd:"+kwd);
+//		System.out.println("page:"+page);
 		try {
 			conn = getConnection();
 
 			//3. SQL 준비
+
 			String sql =
-				"select a.no, " +
-				"	    a.title, "+
-				"       a.contents, "+
-				"       a.hit, a.reg_date, "+
-				"       a.g_no, "+
-				"       a.o_no, "+
-				"       a.depth, "+
-				"       a.user_no, "+
-				"       b.name  "+
-				"from board a, user b "+
-				"where a.user_no = b.no "+
-				"order by g_no DESC, o_no ASC";
-			   
+					"select a.no, " +
+					"	    a.title, "+
+					"       a.contents, "+
+					"       a.hit, a.reg_date, "+
+					"       a.g_no, "+
+					"       a.o_no, "+
+					"       a.depth, "+
+					"       a.user_no, "+
+					"       b.name  "+
+					"from board a, user b "+
+					"where a.user_no = b.no "+
+					"and a.title like ? "+
+					"order by g_no DESC, o_no ASC "+
+					"limit ?,5 ";
 			pstmt = conn.prepareStatement(sql);
-			
 			//4. binding
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setInt(2, page);
+					
+			
+//				sql =
+//						"select a.no, " +
+//						"	    a.title, "+
+//						"       a.contents, "+
+//						"       a.hit, a.reg_date, "+
+//						"       a.g_no, "+
+//						"       a.o_no, "+
+//						"       a.depth, "+
+//						"       a.user_no, "+
+//						"       b.name  "+
+//						"from board a, user b "+
+//						"where a.user_no = b.no "+
+//						"and a.title like '%?%' "+
+//						"order by g_no DESC, o_no ASC "+
+//						"limit ?,5 ";
+//				pstmt = conn.prepareStatement(sql);
+//				//4. binding
+//				pstmt.setString(1, kwd);
+//				pstmt.setInt(2, page);
+		
+
 			
 			//5. SQL 실행
 			rs = pstmt.executeQuery();
@@ -211,6 +245,7 @@ public class BoardDao {
 		
 	}
 	
+	// 게시물 보기 (select)
 	// 게시글 검색.
 	public BoardVo boardFindByNo(int no) {
 		BoardVo boardvo = null; // 검색되는 데이터가 없으면 0반환. 새글이라는 의미.
@@ -231,7 +266,8 @@ public class BoardDao {
 					"    reg_date,  "+
 					"    g_no,  "+
 					"    o_no,  "+
-					"    depth "+
+					"    depth, "+
+					"    user_no "+
 					"from board  "+
 					"where no = ?";
 
@@ -253,6 +289,7 @@ public class BoardDao {
 				int g_no = rs.getInt(5);
 				int o_no = rs.getInt(6);
 				int depth = rs.getInt(7);
+				Long user_no = rs.getLong(8);
 				
 				boardvo = new BoardVo();
 				boardvo.setNo(no);
@@ -263,6 +300,7 @@ public class BoardDao {
 				boardvo.setG_no(g_no);
 				boardvo.setO_no(o_no);
 				boardvo.setDepth(depth);
+				boardvo.setUser_no(user_no);
 			}
 			
 		} catch (SQLException e) {
@@ -285,6 +323,7 @@ public class BoardDao {
 		
 	}
 	
+	// 게시물 수정 (update)
 	public void TitleContentUpdate(BoardVo boardvo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -333,39 +372,37 @@ public class BoardDao {
 		
 	}
 	
-	// max o_no 찾기 select
-	public int maxO_NoByG_NoAndUserNo(int g_No, UserVo authUser) {
-		int result=0; // 검색되는 데이터가 없으면 예외처리해야됨. 
+	
+	public void updateO_NoByG_NoAndO_No(int g_No, int o_No) {
 		Connection conn = null;
-		PreparedStatement pstmt = null;	
-		ResultSet rs = null;
+		PreparedStatement pstmt = null;
 		
 		try {
-
+			// 1. webdb 연결 
 			conn = getConnection();
 
 			// 3. sql준비.
+
 			String sql = 
-					"select max(o_no) "+
-					"from board "+
+					"update board "+
+					"set o_no = o_no+? "+
 					"where g_no = ? "+
-					"and user_no = ?";
+					"and o_no >= ? ";
 
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 값 바인딩.
-			pstmt.setLong(1, g_No);
-			pstmt.setLong(2, authUser.getNo());
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, g_No);
+			pstmt.setInt(3, o_No);		
 			
-			
+
 			// 5. SQL 실행.
-			rs = pstmt.executeQuery();
+			int count = pstmt.executeUpdate();
 
 			// 6. 결과 처리.
-			if(rs.next()) { // 데이터가 존재하면 가장큰수 반환.
-				result = rs.getInt(1);
-			}
-			
+//			result = count == 1;
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
@@ -382,18 +419,207 @@ public class BoardDao {
 			}
 		}
 		
-		return result;
-		
 	}
 	
 	// 게시물 삭제 (delete)
+	public void deleteBoardByNo(int no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			// 1. webdb 연결 
+			conn = getConnection();
+
+			// 3. sql준비.
+
+			String sql = 
+					"delete from board "+
+					"where no =? ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 값 바인딩.
+			pstmt.setInt(1, no);	
+			
+
+			// 5. SQL 실행.
+			int count = pstmt.executeUpdate();
+
+			// 6. 결과 처리.
+//			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 6. 자원정리
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
-	// 게시물 보기 (select)
+	// 조회수 올리기
+	public void updateHitByNo(int no, int hit) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			// 1. webdb 연결 
+			conn = getConnection();
+
+			// 3. sql준비.
+
+			String sql = 
+					"update board "+
+					"set hit = hit+? "+
+					"where no =? ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 값 바인딩.
+			pstmt.setInt(1, hit);
+			pstmt.setInt(2, no);
+			
+
+			// 5. SQL 실행.
+			int count = pstmt.executeUpdate();
+
+			// 6. 결과 처리.
+//			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 6. 자원정리
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
-	// 게시물 수정 (update)
 	
-	
-	
+	// 보드 페이징 처리
+	public PageVo boardPageSet(String kwd,int page) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;	
+		ResultSet rs = null;
+		PageVo pagevo = new PageVo(page);
+		int startPage;
+		int endPage;
+		int currentPage = page;
+//		int nextPage;
+//		int prevPage;
+		int totalPage=0;
+		int outputpage = 5;
+		if(kwd == null) {
+			kwd="";
+		}
+		try {
+
+			conn = getConnection();
+
+			// 3. sql준비.
+			String sql = 
+					"select count(*) from board where title like ?";
+//			 
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 값 바인딩.
+			pstmt.setString(1,"%"+kwd+"%");
+			
+			// 5. SQL 실행.
+			rs = pstmt.executeQuery();
+
+			// 6. 결과 처리.
+			if(rs.next()) { // totalpage 삽입.
+				int allPage = rs.getInt(1);
+				if(allPage % outputpage !=0) {
+					totalPage = allPage/outputpage +1;
+				}else if(allPage==0){
+					totalPage = 1;
+				}else {
+					totalPage = allPage/outputpage ;
+				}
+			}
+			
+			//startPage : currentPage -2
+			// 예외1 : currentPage -2 <= 0 일때 1삽입.
+			if((currentPage-2)<=0) {
+				startPage = 1;
+			}else {
+				startPage = currentPage-2;
+			}
+			// 예외2. currentpage가 totalPage , totalPage-1 일때
+			// 여기는 totalPage가 5초과일때. StartPage = totalPage-5 삽입.
+			if(currentPage==totalPage || currentPage==totalPage-1) {
+				if(totalPage>5) {
+					startPage = totalPage-4 ;
+				}
+				else {
+					startPage = totalPage;
+				}
+			}
+			
+			
+			
+			// endPage : currentPage +2
+			// 예외1. currentPage+2 > totalpage 일경우 endpage에 totalpage삽입.
+			if((currentPage+2) > totalPage) {
+				endPage = totalPage;
+			}else {
+				endPage = currentPage+2;
+			}
+			// 예외2. currentpage가 1또는 2일때 총페이지가 5보다 클때.
+			if(currentPage==1 || currentPage==2) {
+				if(totalPage>5) {
+					endPage = outputpage;
+				}
+				else {
+					endPage = totalPage;
+				}
+			}
+
+			
+			
+			pagevo.setStartPage(startPage);
+			pagevo.setEndPage(endPage);
+			pagevo.setTotalPage(totalPage);
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 6. 자원정리
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return pagevo;
+	}
 	
 	
 	
@@ -415,6 +641,14 @@ public class BoardDao {
 
 		return conn;
 	}
+
+	
+
+	
+
+	
+
+	
 
 	
 

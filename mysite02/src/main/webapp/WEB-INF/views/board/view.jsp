@@ -14,9 +14,11 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board" class="board-form">
+				<p>조회수 ${boardvo.hit }회</p>
 				<table class="tbl-ex">
 					<tr>
-						<th colspan="2">글보기</th>
+						<th colspan="2" align="right">글보기</th>
+						
 					</tr>
 					<tr>
 						<td class="label">제목</td>
@@ -39,6 +41,7 @@
 						<input type = "hidden" name = "a" value="write">
 						<input type = "hidden" name = "mode" value="review">
 						<input type = "hidden" name = "g_No" value="${boardvo.g_no }">
+						<input type = "hidden" name = "o_No" value="${boardvo.o_no }">
 						<input type = "hidden" name = "depth" value="${boardvo.depth }">
 						<table class="tbl-ex">
 							<tr>
@@ -56,19 +59,23 @@
 							</tr>
 						</table>
 						<div class="bottom">
-							<a href="${pageContext.request.contextPath}/board">취소</a>
+							<a href="${pageContext.request.contextPath}/board?p=1">글목록</a>
+							<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}">취소</a>
 							<input type="submit" value="등록">
 						</div>
 					</form>				
 					</div>
 				</c:if>
-				
-				
+				<c:if test='${param.mode != "review" }' >
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board">글목록</a>
-					<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}">글수정</a>
-					<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&mode=review">댓글달기</a>
+					<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage}">글목록</a>
+					<c:if test='${boardvo.user_no == authUser.no && not empty authUser.no}'>
+						<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}">글수정</a>
+						<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&mode=review">댓글달기</a>
+					</c:if>
+					
 				</div>
+				</c:if>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
