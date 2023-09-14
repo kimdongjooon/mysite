@@ -56,7 +56,7 @@
 					<ul>
 						<c:if test="${pagevo.currentPage !=1 }">
 							<li>
-								<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage-1}">◀</a>
+								<a href="${pageContext.request.contextPath}/board?p=${pagevo.prevPage}&kwd=${param.kwd}">◀</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1" var="i">
@@ -66,12 +66,12 @@
 							<c:if test="${pagevo.currentPage != i }">
 							<li class=>
 							</c:if>
-								<a href="${pageContext.request.contextPath}/board?p=${i }">${i }</a>
+								<a href="${pageContext.request.contextPath}/board?p=${i }&kwd=${param.kwd}">${i }</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pagevo.currentPage != pagevo.totalPage }">
 							<li>
-							<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage+1}">▶</a>
+							<a href="${pageContext.request.contextPath}/board?p=${pagevo.nextPage}&kwd=${param.kwd}">▶</a>
 							</li>
 						</c:if>
 						<%-- <li>

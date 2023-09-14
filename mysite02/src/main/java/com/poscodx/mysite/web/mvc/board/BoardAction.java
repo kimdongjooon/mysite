@@ -23,6 +23,7 @@ public class BoardAction implements Action {
 		String kwd ="";
 		try {
 			kwd = request.getParameter("kwd");
+			request.setAttribute("kwd", kwd);
 //			request.getSession(true).setAttribute("kwd",kwd);
 		}catch (Exception ex){
 			

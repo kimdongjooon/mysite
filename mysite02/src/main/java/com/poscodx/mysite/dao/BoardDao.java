@@ -523,8 +523,8 @@ public class BoardDao {
 		int startPage;
 		int endPage;
 		int currentPage = page;
-//		int nextPage;
-//		int prevPage;
+		int nextPage ;
+		int prevPage;
 		int totalPage=0;
 		int outputpage = 5;
 		if(kwd == null) {
@@ -572,7 +572,7 @@ public class BoardDao {
 					startPage = totalPage-4 ;
 				}
 				else {
-					startPage = totalPage;
+					startPage = 1;
 				}
 			}
 			
@@ -599,6 +599,8 @@ public class BoardDao {
 			
 			pagevo.setStartPage(startPage);
 			pagevo.setEndPage(endPage);
+			pagevo.setNextPage(currentPage+1);
+			pagevo.setPrevPage(currentPage-1);
 			pagevo.setTotalPage(totalPage);
 			
 			
