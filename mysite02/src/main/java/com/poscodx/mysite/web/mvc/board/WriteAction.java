@@ -1,6 +1,7 @@
 package com.poscodx.mysite.web.mvc.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -22,7 +23,7 @@ public class WriteAction implements Action {
 		int g_No;
 		int o_No = 1;  // 새글일때 1.
 		int depth = 1; // 새글일때 1.
-		
+		String kwd = "";
 		// 사용자의 user no 받기
 		UserVo authUser = (UserVo) request.getSession(true).getAttribute("authUser");
 		
@@ -30,7 +31,7 @@ public class WriteAction implements Action {
 		// 댓글일때 실행. 
 		try {
 			mode = request.getParameter("mode");
-			
+			kwd = request.getParameter("kwd");
 		}catch (Exception ex) {
 			
 		}finally {
@@ -59,6 +60,11 @@ public class WriteAction implements Action {
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		String currentTimestampToString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimestamp);
 		
+		// 키워드 입력.
+		if(kwd == null) {
+			kwd = "";
+		}
+		request.setAttribute("kwd", kwd);
 		
 		BoardVo boardvo = new BoardVo();
 		boardvo.setTitle(title);
@@ -74,7 +80,7 @@ public class WriteAction implements Action {
 		
 		PageVo pagevo = (PageVo) request.getSession(true).getAttribute("pagevo");
 		// 게시판으로 돌아가기.
-		response.sendRedirect(request.getContextPath()+"/board?p="+ pagevo.getCurrentPage() );
+		response.sendRedirect(request.getContextPath()+"/board?p="+ pagevo.getCurrentPage()+"&kwd="+kwd);
 		}
 	}
 

@@ -7,7 +7,17 @@ public class PageVo {
 	private int nextPage;
 	private int prevPage;
 	private int totalPage;
+	private int totalBoard;
 	
+	
+	public int getTotalBoard() {
+		return totalBoard;
+	}
+
+	public void setTotalBoard(int totalBoard) {
+		this.totalBoard = totalBoard;
+	}
+
 	public PageVo(int page) {
 		this.currentPage = page;
 	}
@@ -51,7 +61,8 @@ public class PageVo {
 	@Override
 	public String toString() {
 		return "PageVo [startPage=" + startPage + ", endPage=" + endPage + ", currentPage=" + currentPage
-				+ ", nextPage=" + nextPage + ", prevPage=" + prevPage + ", totalPage=" + totalPage + "]";
+				+ ", nextPage=" + nextPage + ", prevPage=" + prevPage + ", totalPage=" + totalPage + ", totalBoard="
+				+ totalBoard + "]";
 	}
 	
 	

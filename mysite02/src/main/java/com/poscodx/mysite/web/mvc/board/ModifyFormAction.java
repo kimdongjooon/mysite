@@ -15,11 +15,13 @@ public class ModifyFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String kwd = request.getParameter("kwd");
+		
 		int no = Integer.parseInt(request.getParameter("no"));
 		
 		BoardVo boardvo = new BoardDao().boardFindByNo(no);
 		request.setAttribute("boardvo", boardvo);
-		
+		request.setAttribute("kwd", kwd);
 		request
 			.getRequestDispatcher("/WEB-INF/views/board/modifyform.jsp")
 			.forward(request, response);

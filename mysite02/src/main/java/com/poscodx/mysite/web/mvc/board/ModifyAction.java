@@ -17,6 +17,7 @@ public class ModifyAction implements Action {
 		long no = Long.parseLong(request.getParameter("no"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		String kwd = request.getParameter("kwd");
 		
 		BoardVo boardvo = new BoardVo();
 		boardvo.setUser_no(no);
@@ -24,7 +25,7 @@ public class ModifyAction implements Action {
 		boardvo.setContents(content);
 		
 		new BoardDao().TitleContentUpdate(boardvo);
-		
+		request.setAttribute("kwd", kwd);
 		response.sendRedirect(request.getContextPath()+"/board?a=view&no="+no);
 		
 		

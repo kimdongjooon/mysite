@@ -1,6 +1,7 @@
 package com.poscodx.mysite.web.mvc.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,13 @@ public class DeleteAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		int no = Integer.parseInt(request.getParameter("no"));
 		
+		String kwd = request.getParameter("kwd");
 		new BoardDao().deleteBoardByNo(no);
 		
+		request.setAttribute("kwd", kwd);
+		
 		PageVo pagevo = (PageVo) request.getSession(true).getAttribute("pagevo");
-		response.sendRedirect(request.getContextPath()+"/board?p="+pagevo.getCurrentPage());
+		response.sendRedirect(request.getContextPath()+"/board?p="+pagevo.getCurrentPage()+"&kwd="+URLEncoder.encode(kwd));
 		
 			
 	}

@@ -523,10 +523,12 @@ public class BoardDao {
 		int startPage;
 		int endPage;
 		int currentPage = page;
-		int nextPage ;
+		int nextPage;
 		int prevPage;
 		int totalPage=0;
+		int totalBoard=0;
 		int outputpage = 5;
+		
 		if(kwd == null) {
 			kwd="";
 		}
@@ -548,13 +550,13 @@ public class BoardDao {
 
 			// 6. 결과 처리.
 			if(rs.next()) { // totalpage 삽입.
-				int allPage = rs.getInt(1);
-				if(allPage % outputpage !=0) {
-					totalPage = allPage/outputpage +1;
-				}else if(allPage==0){
+				totalBoard = rs.getInt(1);
+				if(totalBoard % outputpage !=0) {
+					totalPage = totalBoard/outputpage +1;
+				}else if(totalBoard==0){
 					totalPage = 1;
 				}else {
-					totalPage = allPage/outputpage ;
+					totalPage = totalBoard/outputpage ;
 				}
 			}
 			
@@ -602,6 +604,7 @@ public class BoardDao {
 			pagevo.setNextPage(currentPage+1);
 			pagevo.setPrevPage(currentPage-1);
 			pagevo.setTotalPage(totalPage);
+			pagevo.setTotalBoard(totalBoard);
 			
 			
 			

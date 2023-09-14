@@ -16,6 +16,8 @@ public class ViewAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String kwd = request.getParameter("kwd");
+	
 		int no = Integer.parseInt(request.getParameter("no"));
 		int hit = 0;
 		try {
@@ -28,7 +30,7 @@ public class ViewAction implements Action {
 //		List<BoardVo> list = new BoardDao().boardListFindAll();
 		BoardVo boardvo = new BoardDao().boardFindByNo(no);
 		request.setAttribute("boardvo", boardvo);
-		
+		request.setAttribute("kwd", kwd);
 		request
 			.getRequestDispatcher("/WEB-INF/views/board/view.jsp")
 			.forward(request, response);

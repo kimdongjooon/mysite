@@ -43,6 +43,7 @@
 						<input type = "hidden" name = "g_No" value="${boardvo.g_no }">
 						<input type = "hidden" name = "o_No" value="${boardvo.o_no }">
 						<input type = "hidden" name = "depth" value="${boardvo.depth }">
+						<%-- <input type = "hidden" name = "kwd" value="${param.kwd }"> --%>
 						<table class="tbl-ex">
 							<tr>
 								<th colspan="2">댓글달기</th>
@@ -59,8 +60,8 @@
 							</tr>
 						</table>
 						<div class="bottom">
-							<a href="${pageContext.request.contextPath}/board?p=1">글목록</a>
-							<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}">취소</a>
+							<a href="${pageContext.request.contextPath}/board?p=1&kwd=${param.kwd}">글목록</a>
+							<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&kwd=${param.kwd}">취소</a>
 							<input type="submit" value="등록">
 						</div>
 					</form>				
@@ -68,10 +69,10 @@
 				</c:if>
 				<c:if test='${param.mode != "review" }' >
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage}">글목록</a>
+					<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage}&kwd=${param.kwd}">글목록</a>
 					<c:if test='${boardvo.user_no == authUser.no && not empty authUser.no}'>
-						<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}">글수정</a>
-						<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&mode=review">댓글달기</a>
+						<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}&kwd=${param.kwd}">글수정</a>
+						<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&mode=review&kwd=${param.kwd}">댓글달기</a>
 					</c:if>
 					
 				</div>

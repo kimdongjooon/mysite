@@ -30,22 +30,22 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list) }" />
+					<c:set var="count" value="${pagevo.totalBoard }" />
 					<c:forEach items="${list }" var="vo" varStatus="status" >
 					<tr>
-						<td>[${count - status.index }]</td>
+						<td>[${count - status.index-(pagevo.currentPage-1)*5}]</td>
 						<td style = "padding-left: ${(vo.depth-1)*30}px">
 							
 							<c:if test="${vo.depth>=2 }">
 								<img src="${pageContext.request.contextPath}/assets/images/reply.png" />
 							</c:if>
-							<a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}&hit=1">${vo.title }</a>
+							<a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}&hit=1&kwd=${param.kwd}">${vo.title }</a>
 						</td>
 						<td>${vo.name }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.reg_date }</td>
 						<c:if test='${vo.user_no == authUser.no}'>
-							<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}" class="del">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}&kwd=${param.kwd}" class="del">삭제</a></td>
 						</c:if>
 					</tr>
 					</c:forEach>
@@ -95,7 +95,7 @@
 					<!-- pager 추가 -->
 				<c:if test='${not empty authUser.no}'>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/board?a=writeform&kwd=${param.kwd}" id="new-book">글쓰기</a>
 					</div>
 				</c:if>				
 			</div>
