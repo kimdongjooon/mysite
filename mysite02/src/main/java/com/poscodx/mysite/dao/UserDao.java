@@ -175,22 +175,7 @@ public class UserDao {
 	}
 	
 	
-	private Connection getConnection() {
-		Connection conn = null;
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			String url = "jdbc:mariadb://192.168.64.3:3307/webdb?charset=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-
-		return conn;
-
-	}
+	
 	public boolean updateUser(Long no, String name, String password, String gender) {
 		boolean result = false;
 		Connection conn = null;
@@ -250,7 +235,23 @@ public class UserDao {
 		return result;
 	}
 	
-	
+	private Connection getConnection() {
+		Connection conn = null;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+
+			String address = "172.20.10.4:3307/webdb_hotspot";
+			String url = "jdbc:mariadb://"+address+"?charset=utf8";
+			conn = DriverManager.getConnection(url, "webdb", "webdb");
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		return conn;
+
+	}
 
 
 	
