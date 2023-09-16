@@ -70,9 +70,11 @@
 				<c:if test='${param.mode != "review" }' >
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?p=${pagevo.currentPage}&kwd=${param.kwd}">글목록</a>
-					<c:if test='${boardvo.user_no == authUser.no && not empty authUser.no}'>
-						<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}&kwd=${param.kwd}">글수정</a>
+					<c:if test='${not empty authUser.no}'>
 						<a href="${pageContext.request.contextPath}/board?a=view&no=${boardvo.no}&mode=review&kwd=${param.kwd}">댓글달기</a>
+						<c:if test='${boardvo.user_no == authUser.no}'>
+							<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardvo.no}&kwd=${param.kwd}">글수정</a>
+						</c:if>
 					</c:if>
 					
 				</div>
