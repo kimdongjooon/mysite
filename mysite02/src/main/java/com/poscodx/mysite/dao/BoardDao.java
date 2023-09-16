@@ -90,12 +90,13 @@ public class BoardDao {
 
 			// 3. sql준비.
 			String sql = 
-					"select max(g_no) from board where user_no= ?";
+					"select max(g_no) from board";
+//					"select max(g_no) from board where user_no= ?";
 
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 값 바인딩.
-			pstmt.setLong(1, authUser.getNo());
+//			pstmt.setLong(1, authUser.getNo());
 			
 			
 			// 5. SQL 실행.
