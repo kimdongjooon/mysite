@@ -22,7 +22,7 @@ public class GuestbookService {
 	}
 	
 	public void deleteContents(int no, String password) {
-		gestbookRepository.deleteById(no, password);
+		gestbookRepository.deleteByNoAndPassword(no, password);
 	}
 	
 	
