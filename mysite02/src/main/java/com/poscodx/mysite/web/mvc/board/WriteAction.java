@@ -46,7 +46,7 @@ public class WriteAction implements Action {
 			}
 			else { // 새글일때,
 				// board db에서 g_no 가져오기. +1하여 다음 새로운 글로 구현.
-				g_No = new BoardDao().setMaxG_no(authUser) +1 ;
+				g_No = new BoardDao().setMaxG_no() +1 ;
 			}
 			System.out.println(g_No+":"+o_No+":"+depth);
 				

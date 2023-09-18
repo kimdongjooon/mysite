@@ -1,22 +1,21 @@
-package com.poscodx.mysite.dao;
+package com.poscodx.mysite.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.poscodx.mysite.vo.BoardListVo;
+import org.springframework.stereotype.Repository;
+
 import com.poscodx.mysite.vo.BoardVo;
-import com.poscodx.mysite.vo.GuestBookVo;
 import com.poscodx.mysite.vo.PageVo;
 import com.poscodx.mysite.vo.UserVo;
 
-public class BoardDao {
+@Repository
+public class BoardRepository {
 	
 	// 게시물 입력 (insert)
 	// 입력 데이터 (게시글 번호, 제목, 내용, 조회수, 입력날짜, 그룹넘버, 그룹안순서, 댓글깊이, 유저번호)
@@ -104,7 +103,7 @@ public class BoardDao {
 
 			// 6. 결과 처리.
 			if(rs.next()) { // 데이터가 존재하면 가장큰수 반환.
-				result = rs.getInt(1);
+				result = rs.getInt(1)+1;
 			}
 			
 		} catch (SQLException e) {
@@ -168,28 +167,6 @@ public class BoardDao {
 			pstmt.setString(1, "%"+kwd+"%");
 			pstmt.setInt(2, page);
 					
-			
-//				sql =
-//						"select a.no, " +
-//						"	    a.title, "+
-//						"       a.contents, "+
-//						"       a.hit, a.reg_date, "+
-//						"       a.g_no, "+
-//						"       a.o_no, "+
-//						"       a.depth, "+
-//						"       a.user_no, "+
-//						"       b.name  "+
-//						"from board a, user b "+
-//						"where a.user_no = b.no "+
-//						"and a.title like '%?%' "+
-//						"order by g_no DESC, o_no ASC "+
-//						"limit ?,5 ";
-//				pstmt = conn.prepareStatement(sql);
-//				//4. binding
-//				pstmt.setString(1, kwd);
-//				pstmt.setInt(2, page);
-		
-
 			
 			//5. SQL 실행
 			rs = pstmt.executeQuery();

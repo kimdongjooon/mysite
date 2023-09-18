@@ -16,9 +16,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/board" method="post">
-					<input type="hidden" name="p" value ="1"> 
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.request.contextPath}/board/1" method="post">
+					<!-- <input type="hidden" name="p" value ="1">  -->
+					<input type="text" id="kwd" name="kwd" value="${kwd }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -39,7 +39,7 @@
 							<c:if test="${vo.depth>=2 }">
 								<img src="${pageContext.request.contextPath}/assets/images/reply.png" />
 							</c:if>
-							<a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}&hit=1&kwd=${param.kwd}">${vo.title }</a>
+							<a href="${pageContext.request.contextPath}/board/view/${vo.no}/1/${param.kwd}">${vo.title }</a>
 						</td>
 						<td>${vo.name }</td>
 						<td>${vo.hit }</td>
@@ -95,7 +95,7 @@
 					<!-- pager 추가 -->
 				<c:if test='${not empty authUser.no}'>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=writeform&kwd=${param.kwd}" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/board/write" id="new-book">글쓰기</a>
 					</div>
 				</c:if>				
 			</div>
