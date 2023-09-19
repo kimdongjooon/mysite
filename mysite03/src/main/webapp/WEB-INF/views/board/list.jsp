@@ -39,13 +39,13 @@
 							<c:if test="${vo.depth>=2 }">
 								<img src="${pageContext.request.contextPath}/assets/images/reply.png" />
 							</c:if>
-							<a href="${pageContext.request.contextPath}/board/view/${vo.no}/1/${param.kwd}">${vo.title }</a>
+							<a href="${pageContext.request.contextPath}/board/view/${vo.no}/1/${kwd}">${vo.title }</a>
 						</td>
 						<td>${vo.name }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.reg_date }</td>
 						<c:if test='${vo.user_no == authUser.no}'>
-							<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}&kwd=${param.kwd}" class="del">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath}/board/delete/${vo.no}/" class="del">삭제</a></td>
 						</c:if>
 					</tr>
 					</c:forEach>
@@ -56,7 +56,7 @@
 					<ul>
 						<c:if test="${pagevo.currentPage !=1 }">
 							<li>
-								<a href="${pageContext.request.contextPath}/board?p=${pagevo.prevPage}&kwd=${param.kwd}">◀</a>
+								<a href="${pageContext.request.contextPath}/board/${pagevo.prevPage}">◀</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1" var="i">
@@ -66,12 +66,12 @@
 							<c:if test="${pagevo.currentPage != i }">
 							<li class=>
 							</c:if>
-								<a href="${pageContext.request.contextPath}/board?p=${i }&kwd=${param.kwd}">${i }</a>
+								<a href="${pageContext.request.contextPath}/board/${i }">${i }</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pagevo.currentPage != pagevo.totalPage }">
 							<li>
-							<a href="${pageContext.request.contextPath}/board?p=${pagevo.nextPage}&kwd=${param.kwd}">▶</a>
+							<a href="${pageContext.request.contextPath}/board/${pagevo.nextPage}">▶</a>
 							</li>
 						</c:if>
 						<%-- <li>

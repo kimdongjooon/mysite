@@ -36,6 +36,27 @@ public class BoardService {
 	public int setG_No() {
 		return boardRepository.setMaxG_no();
 	}
+
+	public void updateHit(BoardVo vo) {
+		boardRepository.updateHitByNo(vo);
+		
+	}
+
+	public void modify(BoardVo vo) {
+		boardRepository.TitleContentUpdate(vo);
+		
+	}
+
+	public void review(BoardVo vo) {
+		boardRepository.updateO_NoByG_NoAndO_No(vo.getG_no(),vo.getO_no());
+		vo.setDepth(vo.getDepth()+1);
+		boardRepository.insert(vo);
+	}
+
+	public void delete(BoardVo vo) {
+		boardRepository.deleteBoardByNo(vo);
+		
+	}
 	
 	
 	

@@ -4,10 +4,13 @@
 	<typeAliases>
 		<typeAlias type="com.poscodx.mysite.vo.GuestBookVo" alias="guestbookvo"/>
 		<typeAlias type="com.poscodx.mysite.vo.UserVo" alias="uservo"/>
+		<typeAlias type="com.poscodx.mysite.vo.BoardVo" alias="boardvo"/>
+		<typeAlias type="com.poscodx.mysite.vo.PageVo" alias="pagevo"/>
     </typeAliases>
     	
 	<mappers>
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/user.xml" />
+		<mapper resource="mybatis/mappers/board.xml" />
 	</mappers>
 </configuration>
