@@ -1,10 +1,5 @@
 package com.poscodx.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +11,7 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
