@@ -48,7 +48,9 @@ public class BoardService {
 	}
 
 	public void review(BoardVo vo) {
+		
 		boardRepository.updateO_NoByG_NoAndO_No(vo.getG_no(),vo.getO_no());
+		vo.setO_no(vo.getO_no()+1);
 		vo.setDepth(vo.getDepth()+1);
 		boardRepository.insert(vo);
 	}

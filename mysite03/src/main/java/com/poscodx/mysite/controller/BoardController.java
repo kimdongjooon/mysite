@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.PageVo;
+import com.poscodx.mysite.vo.UserVo;
 
 @Controller
 @RequestMapping("/board")
@@ -74,9 +75,8 @@ public class BoardController {
 				, method=RequestMethod.GET)
 	public String view(
 			BoardVo vo,
-//			@PathVariable("no") int no,
-//			@PathVariable(value ="hit", required=false) int hit,
 			Model model) {
+		
 		boardService.updateHit(vo);
 		
 		BoardVo boardvo= boardService.getView(vo.getNo());
@@ -86,16 +86,27 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write", method=RequestMethod.GET )
-	public String write() {	
+	public String write(
+			HttpSession session) {
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		return "/board/write";
 	}
 	
 	@RequestMapping(value = "/write", method=RequestMethod.POST )
 	public String write(
+			HttpSession session,
 			@RequestParam(value = "mode", required=false) String mode,
 			BoardVo boardvo, 
 			Model model) {	
-		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		boardvo.setO_no(1); 
 		boardvo.setDepth(1);
 		System.out.println("write1[POST]: "+boardvo);
@@ -109,9 +120,14 @@ public class BoardController {
 	
 	@RequestMapping(value = "/review/{no}", method=RequestMethod.GET)
 	public String review(
+			HttpSession session,
 			@PathVariable("no") int no,
 			Model model) {
-		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		model.addAttribute("mode","review");
 		BoardVo boardvo= boardService.getView(no);
 		model.addAttribute("boardvo",boardvo);
@@ -121,8 +137,14 @@ public class BoardController {
 	
 	@RequestMapping(value="/review/{user_no}", method=RequestMethod.POST)
 	public String review(
+			HttpSession session,
 			BoardVo vo
 			) {
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		boardService.review(vo);
 		
 		return "redirect:/board/1";
@@ -130,9 +152,14 @@ public class BoardController {
 	
 	@RequestMapping(value = "/modify/{no}", method=RequestMethod.GET)
 	public String modify(
+			HttpSession session,
 			@PathVariable("no") int no,
 			Model model) {
-		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		BoardVo boardvo= boardService.getView(no);
 		System.out.println("modify[GET]: "+boardvo);
 		model.addAttribute("boardvo",boardvo);
@@ -142,8 +169,14 @@ public class BoardController {
 	
 	@RequestMapping(value = "/modify/{no}", method=RequestMethod.POST)
 	public String modify(
+			HttpSession session,
 			BoardVo vo,
 			Model model) {
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
 		boardService.modify(vo);
 
 		return  "redirect:/board/view/"+vo.getNo();
@@ -151,7 +184,14 @@ public class BoardController {
 	
 	@RequestMapping("/delete/{no}")
 	public String delete(
+			HttpSession session,
 			BoardVo vo) {
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		////////////////////////////////////////////////////////////
+		
 		boardService.delete(vo);
 		
 		return "redirect:/board/1";

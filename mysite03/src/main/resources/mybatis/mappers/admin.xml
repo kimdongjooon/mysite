@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+	<select id="find" resultType="sitevo">
+		<![CDATA[
+		SELECT * FROM site where no = 1;
+		]]>
+	</select>
+	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[
+			update site set
+				title = #{title},
+   				welcome = #{welcome},
+				profile = #{profile},
+    			description = #{description}
+			where no = #{no};
+		]]>
+	</update>
+
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+		insert 
+		into board 
+		values (null,#{title},#{contents},#{hit},now(),#{g_no},#{o_no},#{depth},#{user_no})
+		]]>
+	</insert>
+	
+	
+	
+	<select id="boardListFindFiveBoard" resultType="boardvo" parameterType="map">
+		<![CDATA[
+		select 
+			a.no,
+			a.title, 
+			a.contents, 
+			a.hit, a.reg_date, 
+			a.g_no, 
+			a.o_no, 
+			a.depth, 
+			a.user_no, 
+			b.name  
+		from board a, user b 
+		where a.user_no = b.no 
+		and a.title like #{kwd}
+		order by g_no DESC, o_no ASC 
+		limit #{page},5 
+		]]>
+	</select>
+	
+	<select id="boardFindByNo" resultType="boardvo" parameterType="int">
+		<![CDATA[
+		select 
+			no,
+			title, 
+			contents, 
+			hit, 
+			reg_date,  
+			g_no,  
+			o_no,  
+			depth, 
+			user_no 
+		from board  
+		where no = #{no}
+		]]>
+	</select>
+	
+	<update id="TitleContentUpdate" parameterType="boardvo">
+		<![CDATA[
+		update board
+		set  
+			title = #{title}, 
+			contents = #{contents} 
+		where no = #{no}
+		]]>
+	</update>
+	
+	<update id="updateO_NoByG_NoAndO_No" parameterType="map">
+		<![CDATA[
+		update board 
+		set o_no = o_no+1 
+		where g_no = #{g_no}
+		and o_no >= #{o_no}
+		]]>
+	</update>
+	
+ 	<delete id="deleteBoardByNo" parameterType="boardvo">
+ 		<![CDATA[
+ 			delete from board where no = #{no}
+ 		]]>	
+ 	</delete>
+	
+	<update id="updateHitByNo" parameterType="boardvo">
+		<![CDATA[
+ 			update board 
+			set hit = hit+#{hit}
+			where no = #{no}
+ 		]]>	
+	</update>
+	
+	<select id="boardPageSet" resultType="int" parameterType="String" >
+		<![CDATA[
+ 			select count(*) from board where title like #{kwd}
+ 		]]>	
+	</select>
+	
+	
+	<select id="findAll" resultType="boardvo">
+		<![CDATA[
+		select no, name, password, contents, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate
+		from guestbook
+		order by reg_date desc
+		]]>
+	</select>
+	
+	
+	
+	<delete id="deleteByNoAndPassword" parameterType="map">
+		<![CDATA[
+		delete from guestbook 
+		where no = #{no} 
+		and password = #{password}
+		]]>
+	</delete>
+</mapper>
