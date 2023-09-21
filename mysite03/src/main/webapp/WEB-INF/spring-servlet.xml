@@ -24,6 +24,9 @@
 		</mvc:argument-resolvers>
 	 </mvc:annotation-driven>
 	
+	<!-- url resource mapping -->
+	<mvc:resources mapping="/images/**" location="file:/Users/kdj/mysite-uploads/" />
+	
 
 	<!-- Default Servlet Handler -->
 	<mvc:default-servlet-handler/>
@@ -55,8 +58,21 @@
 	   <property name="order" value="1" />
 	</bean>
 
+	<!-- Multipart resolver 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 최대업로드 가능한 바이트크기 -->
+	   	<property name="maxUploadSize" value="52428800" />
+	    
+	    <!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+    	<property name="maxInMemorySize" value="52428800" />
+	
+	    <!-- defaultEncoding -->
+	    <property name="defaultEncoding" value="utf-8" />
+	</bean>
+	
+
 	<context:annotation-config />
-	<context:component-scan base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />
+	<context:component-scan base-package="com.poscodx.mysite.controller" />
 	
 	
 	

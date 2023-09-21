@@ -11,7 +11,7 @@
 		]]>
 	</select>
 	
-	<select id="findByNo" resultType="uservo" parameterType="long">
+	<select id="findByNo" resultType="uservo" parameterType="int">
 		<![CDATA[
 		select no ,name, email,gender 
 		from user 

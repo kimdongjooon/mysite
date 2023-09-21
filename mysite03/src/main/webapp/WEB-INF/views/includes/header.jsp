@@ -1,11 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "com.poscodx.mysite.vo.SiteVo" %>
+<%@ page import = "org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import = "com.poscodx.mysite.service.SiteService" %>
+<%-- <%!
+@Autowired
+private SiteService siteService;
+%>
+	
+<%		
+	SiteVo siteVo = siteService.getSite();
+%> --%>
 <div id="header">
-	<h1>MySite</h1>
+	<h1>mysite</h1>
 	<ul>
 		<c:choose>
 			<c:when test="${empty authUser }">

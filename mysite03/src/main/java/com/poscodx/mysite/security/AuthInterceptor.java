@@ -56,7 +56,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 		if(role.equals(authUserRole)) {
 			System.out.println("관리자 페이지 입장.");
 			return true;
-		}else {
+		}
+		else if("ADMIN".equals(authUserRole)){
+			System.out.println("관리자 모드 ");
+			return true;
+		}
+		else {
 			System.out.println("관리자가 아님.");
 			response.sendRedirect(request.getContextPath());
 			return false;

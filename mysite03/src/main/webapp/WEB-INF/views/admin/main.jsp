@@ -10,13 +10,12 @@
 <link href="${pageContext.request.contextPath }/assets/css/admin/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	${pageContext.request.contextPath }${siteVo.profile }
 	<div id="container">
 		<c:import url="/WEB-INF/views/admin/include/header.jsp" />
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-form">
-					<form method="post" action="${pageContext.request.contextPath }/admin/main/update/${siteVo.no}">
+					<form method="post" action="${pageContext.request.contextPath }/admin/main/update/${siteVo.no}" enctype="multipart/form-data">
 						<label class="block-label" for="title">사이트 타이틀</label>
 						<input id="title" name="title" type="text" value="${siteVo.title }">
 						
@@ -24,8 +23,8 @@
 						<input id="welcomeMessage" name="welcome" type="text" value="${siteVo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${pageContext.request.contextPath }${siteVo.profile }">
-						<input type="file" name="profile">
+						<img id="profile" src="${pageContext.request.contextPath }/${siteVo.profile }">
+						<input type="file" name="new_profile">
 
 						<label class="block-label">사이트 설명</label>
 						<textarea name="description">${siteVo.description }</textarea>
