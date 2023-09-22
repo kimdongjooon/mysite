@@ -29,7 +29,7 @@
 					
 					<form:input path="name"/>
 					
-					<input id="name" name="name" type="text" value="${userVo.name }">
+					<%-- <input id="name" name="name" type="text" value="${userVo.name }"> --%>
 					<p style= "padding:3px 0 5px 0; text-align: left; color: #f00">
 						<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('name') }">
@@ -39,15 +39,13 @@
 						</spring:hasBindErrors>
 					</p>
 					
+					
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="${userVo.email }">
+					<form:input path="email"/>
+					<%-- <input id="email" name="email" type="text" value="${userVo.email }"> --%>
 					<input type="button" value="id 중복체크">
 					<p style= "padding:3px 0 5px 0; text-align: left; color: #f00">
-					<spring:hasBindErrors name="userVo">
-						<c:if test="${errors.hasFieldErrors('email') }">
-							${errors.getFieldError('email').defaultMessage }
-						</c:if>
-					</spring:hasBindErrors>
+						<form:errors path="email"/>
 					</p>
 					<!-- <a href="#" id="openPopupLink" text-decoration="none" background-color= "#FF4500">팝업 열기 </a>
 
@@ -71,22 +69,19 @@
 						        });
 						    </script> -->
   					
-					 
-					<label class="block-label"><spring:message code="user.join.label.password" />패스워드</label>
-					<input name="password" type="password" value="${userVo.password }">
+					
+					<label class="block-label"><spring:message code="user.join.label.password" /></label>
+					<form:password path="password" />
+					<%-- <input name="password" type="password" value="${userVo.password }"> --%>
 					<p style= "padding:3px 0 5px 0; text-align: left; color: #f00">
-					<spring:hasBindErrors name="userVo">
-						<c:if test="${errors.hasFieldErrors('password') }">
-							${errors.getFieldError('password').defaultMessage }
-						</c:if>
-					</spring:hasBindErrors>
+						<form:errors path="password"/>
 					</p>
 					
 					
 					<fieldset>
 						<legend>성별</legend>
-						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-						<label>남</label> <input type="radio" name="gender" value="male">
+						<form:radiobutton path="gender" value="female" label ="여" checked="checked"/>
+						<form:radiobutton path="gender" value="male" label ="남" checked="checked"/>
 					</fieldset>
 					
 					<fieldset>

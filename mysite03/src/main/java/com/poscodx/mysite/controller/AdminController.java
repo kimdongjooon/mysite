@@ -1,6 +1,9 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,15 @@ import com.poscodx.mysite.vo.SiteVo;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	// 스프링 컨테이너 
+	@Autowired
+	private ApplicationContext applicationContext;
+	
+	// 서블릿 컨테이너.  
+	@Autowired
+	private ServletContext servletContext;
+	
 	@Autowired
 	private SiteService siteService;
 	
@@ -43,6 +55,7 @@ public class AdminController {
 		sitevo.setProfile(url);
 		
 		siteService.updateSite(sitevo);
+		// 성공할때 siteinterceptor에서 sitevo를 바꿔줘야함.
 		return "redirect:/admin";
 	}
 	

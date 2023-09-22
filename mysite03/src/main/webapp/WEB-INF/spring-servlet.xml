@@ -25,7 +25,7 @@
 	 </mvc:annotation-driven>
 	
 	<!-- url resource mapping -->
-	<mvc:resources mapping="/images/**" location="file:/Users/kdj/mysite-uploads/" />
+	<mvc:resources mapping="/assets/upload-images/**" location="file:/Users/kdj/mysite-uploads/" />
 	
 
 	<!-- Default Servlet Handler -->
@@ -42,7 +42,7 @@
 			<bean class = "com.poscodx.mysite.security.LogoutInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/**/"/>
+			<mvc:mapping path="/** "/>
 			<mvc:exclude-mapping path="/assets/**"/> <!-- 정적 자원 제외. -->
 			<mvc:exclude-mapping path="/user/auth"/>
 			<mvc:exclude-mapping path="/user/logout"/>
@@ -56,6 +56,12 @@
 	   <property name="prefix" value="/WEB-INF/views/" />
 	   <property name="suffix" value=".jsp" />
 	   <property name="order" value="1" />
+	   <!-- <property name="exposeContextBeansAttributes" value="true" />
+	   <property name="exposedContextBeanNames">
+	   	<list>
+	   		<value>site</value>	
+	   	</list>
+	   </property> -->
 	</bean>
 	
 	 <!-- 6. MessageSource -->

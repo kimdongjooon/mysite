@@ -14,8 +14,6 @@ import com.poscodx.mysite.vo.UserVo;
 
 public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-	
-
 	@Override
 	public Object resolveArgument(
 			MethodParameter parameter, 
@@ -23,7 +21,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			NativeWebRequest webRequest, 
 			WebDataBinderFactory binderFactory) throws Exception {
 		
-		if(supportsParameter(parameter)) {
+		if(!supportsParameter(parameter)) {
 			return WebArgumentResolver.UNRESOLVED;
 		}
 		
