@@ -25,9 +25,18 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			return WebArgumentResolver.UNRESOLVED;
 		}
 		
-		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
-		HttpSession session = request.getSession();
-		return session.getAttribute("authUser");
+//		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+//		HttpSession session = request.getSession();
+//		UserVo authUser = (UserVo) session.getAttribute( "authUser" );
+//
+//		return session.getAttribute("authUser");
+		HttpServletRequest httpServletRequest = 
+	               webRequest. getNativeRequest( HttpServletRequest.class );
+		HttpSession session = httpServletRequest.getSession();
+			
+		UserVo authUser = (UserVo) session.getAttribute( "authUser" );
+		return authUser;
+
 	}
 	
 	@Override

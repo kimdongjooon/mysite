@@ -95,7 +95,7 @@ public class UserController {
 		UserVo userVo = userService.getUser(authUser.getNo());
 		System.out.println("userVo: "+userVo);
 		model.addAttribute("userVo",userVo);
-		return "/user/update";
+		return "user/update";
 	}
 	
 	@Auth
@@ -110,7 +110,7 @@ public class UserController {
 		// 성공시.
 		authUser.setName(userVo.getName());
 		
-		return "redirect:/";
+		return "redirect:/user/update";
 	}
 	
 //	@ExceptionHandler(Exception.class)

@@ -17,7 +17,6 @@
 		Message Converter
 	 -->
 	<mvc:annotation-driven>
-	
 		<!-- Argument Resolver -->
 		<mvc:argument-resolvers>
 			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver" />
