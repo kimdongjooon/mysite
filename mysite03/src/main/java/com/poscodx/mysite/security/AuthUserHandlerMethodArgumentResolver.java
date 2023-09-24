@@ -20,22 +20,19 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, 
 			WebDataBinderFactory binderFactory) throws Exception {
+		System.out.println("authUserHandler: 실행.");
 		
 		if(!supportsParameter(parameter)) {
+			System.out.println("authUserHandler: UNRESOLVED");
 			return WebArgumentResolver.UNRESOLVED;
 		}
 		
-//		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
-//		HttpSession session = request.getSession();
-//		UserVo authUser = (UserVo) session.getAttribute( "authUser" );
-//
-//		return session.getAttribute("authUser");
-		HttpServletRequest httpServletRequest = 
-	               webRequest. getNativeRequest( HttpServletRequest.class );
-		HttpSession session = httpServletRequest.getSession();
-			
+		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute( "authUser" );
-		return authUser;
+		System.out.println("authUserHandler: "+authUser);
+		
+		return session.getAttribute("authUser");
 
 	}
 	
@@ -49,7 +46,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		}
 		
 		// Parameter Type이 UserVo가 아니면, 
-		if(parameter.getParameterType().equals(UserVo.class)) {
+		if(!parameter.getParameterType().equals(UserVo.class)) {
 			return false;
 		}
 		
