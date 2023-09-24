@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.SiteUpdate;
 import com.poscodx.mysite.service.FileUploadService;
 import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
@@ -43,6 +44,7 @@ public class AdminController {
 		return "admin/main";
 	}
 	
+	@SiteUpdate
 	@RequestMapping(value = "/main/update/{no}", method=RequestMethod.POST)
 	public String main(
 			@RequestParam("new_profile") MultipartFile file,
