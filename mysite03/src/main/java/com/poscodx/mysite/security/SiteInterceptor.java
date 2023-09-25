@@ -18,6 +18,7 @@ public class SiteInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		System.out.println("SiteInterceptor : 실행. ");
 		// 1. handler 종류 확인.
 		if(!(handler instanceof HandlerMethod)) {
 			// DefaultServletHandler가 처리하는 경우(정적 자원, /assets/**)

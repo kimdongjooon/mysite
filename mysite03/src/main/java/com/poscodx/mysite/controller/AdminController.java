@@ -26,7 +26,8 @@ public class AdminController {
 	@Autowired
 	private ApplicationContext applicationContext;
 	
-	// 서블릿 컨테이너.  
+	// 서블릿 컨테이너. 
+	// 데이터 업데이트시 servletContext를변경하기 위함. 다른 페이지에서는 servletContext사용해서 로고데이터 가져옴.
 	@Autowired
 	private ServletContext servletContext;
 	
