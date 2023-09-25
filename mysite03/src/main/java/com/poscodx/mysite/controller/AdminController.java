@@ -2,6 +2,7 @@ package com.poscodx.mysite.controller;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -57,8 +58,21 @@ public class AdminController {
 		String url = fileUploadService.restore(file);
 		sitevo.setProfile(url);
 		
+
 		siteService.updateSite(sitevo);
-		// 성공할때 siteinterceptor에서 sitevo를 바꿔줘야함.
+		
+		SiteVo site = applicationContext.getBean(SiteVo.class);
+		
+		// 성공할때 servletContext에서 sitevo를 바꿔줘야함.		
+		servletContext.setAttribute("siteVo", sitevo);
+		
+//		site.setTitle(sitevo.getTitle());
+//		site.setWelcome(sitevo.getWelcome());
+//		site.setProfile(sitevo.getProfile());
+//		site.setDescription(sitevo.getDescription());
+		// 위와 같음.
+		BeanUtils.copyProperties(sitevo, site);
+		
 		return "redirect:/admin";
 	}
 	

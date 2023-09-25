@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.poscodx.mysite.service.SiteService;
+import com.poscodx.mysite.vo.SiteVo;
 
 public class SiteInterceptor implements HandlerInterceptor {
 	@Autowired
@@ -16,6 +17,12 @@ public class SiteInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("SiteInterceptor : 실행 확인. ");
+		SiteVo siteVo = (SiteVo) request.getServletContext().getAttribute("siteVo");
+		if(siteVo == null) {
+			siteVo = siteService.getSite();
+			request.getServletContext().setAttribute("siteVo", siteVo);
+			
+		}
 		
 		return true; // 결과가 무엇이든 다 실행시켜야됨. 통과 시키기.
 	}

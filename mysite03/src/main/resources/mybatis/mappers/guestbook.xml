@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	<select id="findAll" resultType="guestbookVo">
+	<select id="findAll" resultType="guestbookvo">
 		<![CDATA[
 		select no, name, password, contents, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate
 		from guestbook
@@ -10,7 +10,7 @@
 		]]>
 	</select>
 	
-	<insert id="insert" parameterType="guestbookVo">
+	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert into guestbook values(null,#{name},#{password},#{contents},now())
 		]]>

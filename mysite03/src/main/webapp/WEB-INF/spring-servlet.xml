@@ -41,14 +41,14 @@
 			<bean class = "com.poscodx.mysite.security.LogoutInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/** "/>
+			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/assets/**"/> <!-- 정적 자원 제외. -->
 			<mvc:exclude-mapping path="/user/auth"/>
 			<mvc:exclude-mapping path="/user/logout"/>
 			<bean class = "com.poscodx.mysite.security.AuthInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/** "/>
+			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/assets/**"/> <!-- 정적 자원 제외. -->
 			<bean class = "com.poscodx.mysite.interceptor.SiteInterceptor"></bean>
 		</mvc:interceptor>
@@ -90,6 +90,9 @@
 	    <!-- defaultEncoding -->
 	    <property name="defaultEncoding" value="utf-8" />
 	</bean>
+	
+	<!-- ApplicationContextEventListener -->
+	<bean class="com.poscodx.mysite.event.ApplicationContextEventListener" />
 	
 
 	<context:annotation-config />
