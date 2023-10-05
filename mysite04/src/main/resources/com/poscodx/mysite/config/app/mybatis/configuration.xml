@@ -10,9 +10,9 @@
     </typeAliases>
     	
 	<mappers>
-		<mapper resource="mybatis/mappers/guestbook.xml" />
-		<mapper resource="mybatis/mappers/user.xml" />
-		<mapper resource="mybatis/mappers/board.xml" />
-		<mapper resource="mybatis/mappers/admin.xml" />
+		<mapper resource="com/poscodx/mysite/config/app/mybatis/mappers/guestbook.xml" />
+		<mapper resource="com/poscodx/mysite/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/poscodx/mysite/config/app/mybatis/mappers/board.xml" />
+		<mapper resource="com/poscodx/mysite/config/app/mybatis/mappers/admin.xml" />
 	</mappers>
 </configuration>

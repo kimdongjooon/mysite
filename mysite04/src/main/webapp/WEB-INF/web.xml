@@ -8,7 +8,7 @@
 	
 	<context-param>
 		<param-name>contextClass</param-name>
-		<param-value>org.springframework.context.annotation.AnnotationConfigApplicationContext</param-value>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
 	</context-param>
 	<!-- ContextConfigLocation -->
 	<context-param>

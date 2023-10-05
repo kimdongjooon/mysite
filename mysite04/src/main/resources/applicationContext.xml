@@ -28,16 +28,16 @@
 		<property name="password" value="webdb" />
 	</bean> -->
 
-	<!-- MyBatis SqlSessionFactory --> 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+	<!-- MyBatis SqlSessionFactory >> MyBatisConfig로 변환 --> 
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
 		<property name="dataSource" ref="dataSource" /> 
 		<property name="configLocation" value="classpath:mybatis/configuration.xml" /> 
-	</bean>
+	</bean> -->
 	
-	<!-- SqlSession --> 
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<!-- SqlSession >> MyBatisConfig로 변환 --> 
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
+	</bean> -->
 	
 	
 	<!-- @ComponentScan

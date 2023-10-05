@@ -6,6 +6,7 @@
  |     |     |     |-- AppConfig.java
  |     |     |     |-- WebConfig.java
  |     |     |     |-- /app
+ |     |     |     |    |-- jdbc.properties
  |     |     |     |    |-- DBConfig.java
  |     |     |     |    |-- MyBatisConfig.java
  |     |     |     |-- /web
