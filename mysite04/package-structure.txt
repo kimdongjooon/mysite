@@ -12,7 +12,7 @@
  |     |     |     |-- /web
  |     |     |     |    |-- MvcConfig.java
  |     |     |     |    |-- SecurityConfig.java
- |     |     |     |    |-- MessageResourceConfig.java
+ |     |     |     |    |-- MessageSourceConfig.java
  |     |     |     |    |-- FileuploadConfig.java
  |     |     |-- /controller 
  |     |     |-- /service
@@ -33,7 +33,7 @@
  |     |     |    |-- /messages
  |     |     |    |     |-- messages_ko.properties 
  
- 
+ com.poscodx.mysite.config.web.messages
  
  
   
