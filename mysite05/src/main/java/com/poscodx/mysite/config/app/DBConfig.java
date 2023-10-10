@@ -22,11 +22,9 @@ public class DBConfig {
 		dataSource.setUrl(env.getProperty("jdbc.url"));
 		dataSource.setUsername(env.getProperty("jdbc.username"));
 		dataSource.setPassword(env.getProperty("jdbc.password"));
-		dataSource.setInitialSize(env.getProperty("jdbc.initialSize",Integer.class));
-		dataSource.setMaxActive(env.getProperty("jdbc.maxActive",Integer.class)); // 최대동시에 쿼리 때릴수있는 개수.
-		
+		dataSource.setInitialSize(env.getProperty("jdbc.initialSize", Integer.class));
+		dataSource.setMaxActive(env.getProperty("jdbc.maxActive", Integer.class));
 		
 		return dataSource;
 	}
-
 }

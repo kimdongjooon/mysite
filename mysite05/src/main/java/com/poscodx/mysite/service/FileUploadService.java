@@ -17,9 +17,6 @@ import com.poscodx.mysite.exception.FileUploadServiceException;
 @Service
 @PropertySource("classpath:com/poscodx/mysite/config/web/fileupload.properties")
 public class FileUploadService {
-	private static String SAVE_PATH = "/users/kdj/mysite-uploads";
-	private static String URL_PATH = "/assets/upload-images";
-	
 	@Autowired
 	private Environment env;
 	
@@ -28,34 +25,31 @@ public class FileUploadService {
 		
 		try {
 			File uploadDirectory = new File(env.getProperty("fileupload.uploadLocation"));
-			// 존재하지 않으면 디렉토리 생성.
 			if(!uploadDirectory.exists()) {
 				uploadDirectory.mkdirs();
 			}
-			// file이 빈 파일 일때. 
+			
 			if(file.isEmpty()) {
 				return url;
 			}
 			
 			String originFilename = file.getOriginalFilename();
-			String extName = originFilename.substring(originFilename.lastIndexOf(".")+1 );
+			String extName = originFilename.substring(originFilename.lastIndexOf(".") + 1);
 			String saveFilename = generateSaveFilename(extName);
 			Long fileSize = file.getSize();
 			
-			System.out.println("originFilename----> "+originFilename);
-			System.out.println("saveFilename----> "+saveFilename);
-			System.out.println("fileSize----> "+fileSize);
+			System.out.println("########" + originFilename);
+			System.out.println("########" + saveFilename);
+			System.out.println("########" + fileSize);
 			
 			byte[] data = file.getBytes();
-			// 텍스트 이미지 등 모름. 그래서 바이너리 처리위함. 
-			OutputStream os = new FileOutputStream(env.getProperty("fileupload.uploadLocation")+"/"+saveFilename);
+			OutputStream os = new FileOutputStream(env.getProperty("fileupload.uploadLocation") + "/" + saveFilename);
 			os.write(data);
 			os.close();
 			
-			// resource mapping : url로 들어오는 것을 file system으로 찾아라 
-			url = env.getProperty("fileupload.resourceUrl") + "/"+ saveFilename;
+			url = env.getProperty("fileupload.resourceUrl") + "/" + saveFilename;
 			
-		} catch (IOException ex) {
+		} catch(IOException ex) {
 			throw new FileUploadServiceException(ex.toString());
 		}
 		
@@ -73,7 +67,7 @@ public class FileUploadService {
 		filename += calendar.get(Calendar.MINUTE);
 		filename += calendar.get(Calendar.SECOND);
 		filename += calendar.get(Calendar.MILLISECOND);
-		filename += ("."+extName);
+		filename += ("." + extName);
 		
 		return filename;
 	}

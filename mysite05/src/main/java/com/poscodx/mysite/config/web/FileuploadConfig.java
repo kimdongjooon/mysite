@@ -17,27 +17,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class FileuploadConfig implements WebMvcConfigurer {
 	@Autowired
 	private Environment env;
-
-	// MultipartResolver
+	
+	// Multipart Resolver
 	@Bean
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(env.getProperty("fileupload.maxUploadSize",Long.class));
-		multipartResolver.setMaxInMemorySize(env.getProperty("fileupload.maxInMemorySize",Integer.class));
+		multipartResolver.setMaxUploadSize(env.getProperty("fileupload.maxUploadSize", Long.class));
+		multipartResolver.setMaxInMemorySize(env.getProperty("fileupload.maxUploadSize", Integer.class));
 		multipartResolver.setDefaultEncoding(env.getProperty("fileupload.defaultEncoding"));
+		
 		return multipartResolver;
 	}
 
-	
-	
 	// url-resource mapping
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
-			.addResourceHandler(env.getProperty("fileupload.resourceUrl")+"/**")
-			.addResourceLocations("file:"+env.getProperty("fileupload.uploadLocation")+ "/");
-		
+			.addResourceHandler(env.getProperty("fileupload.resourceUrl") + "/**")
+			.addResourceLocations("file:" + env.getProperty("fileupload.uploadLocation") + "/");		
 	}
-	 
-
 }

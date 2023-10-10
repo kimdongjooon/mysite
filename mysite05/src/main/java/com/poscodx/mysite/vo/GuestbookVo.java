@@ -1,15 +1,15 @@
 package com.poscodx.mysite.vo;
 
-public class GuestBookVo {
-	private int no;
+public class GuestbookVo {
+	private Long no;
 	private String name;
-	private String password;
 	private String contents;
+	private String password;
 	private String regDate;
-	public int getNo() {
+	public Long getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(Long no) {
 		this.no = no;
 	}
 	public String getName() {
@@ -18,31 +18,27 @@ public class GuestBookVo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getContents() {
 		return contents;
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getRegDate() {
 		return regDate;
 	}
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-
 	@Override
 	public String toString() {
-		return "GuestBookVo [no=" + no + ", name=" + name + ", password=" + password + ", contents=" + contents
+		return "GuestbookVo [no=" + no + ", name=" + name + ", contents=" + contents + ", password=" + password
 				+ ", regDate=" + regDate + "]";
-	}
-	
-	
+	}	
 }

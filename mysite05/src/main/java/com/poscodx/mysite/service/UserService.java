@@ -8,23 +8,20 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Service
 public class UserService {
-//	가입 완료 메일 보내기.
-//	@Autowired
-//	private MailSender mailSender;
-	
+	// @Autowired
+	// private MailSender mailSender;
+
 	@Autowired
 	private UserRepository userRepository;
 
-//	public void erpProcess01(UserVo vo) {
-//		erpEmployee1Repository.inser(vo);
-//		erpEmployee1Repository.inser(vo);
-//		erpEmployee1Repository.inser(vo);
-//	} ???뭐징.. 
 	public void join(UserVo vo) {
 		System.out.println(vo);
+		
 		userRepository.insert(vo);
+		
 		System.out.println(vo);
-//		mailSender.send(vo.getEmail(),"","");
+		
+		// mailSender.send(vo.getEmail(), "", "");
 	}
 
 	public UserVo getUser(String email, String password) {
@@ -37,6 +34,5 @@ public class UserService {
 
 	public void update(UserVo userVo) {
 		userRepository.update(userVo);
-		
 	}
 }

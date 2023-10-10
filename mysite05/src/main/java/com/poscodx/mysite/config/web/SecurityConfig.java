@@ -30,7 +30,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(handlerMethodArgumentResolver());
-		
 	}
 	
 	
@@ -39,35 +38,33 @@ public class SecurityConfig implements WebMvcConfigurer {
 	//
 	
 	@Bean
-	public HandlerInterceptor LoginInterceptor() {
+	public HandlerInterceptor loginInterceptor() {
 		return new LoginInterceptor();
 	}
 	
 	@Bean
-	public HandlerInterceptor LogoutInterceptor() {
+	public HandlerInterceptor logoutInterceptor() {
 		return new LogoutInterceptor();
 	}
 	
 	@Bean
-	public HandlerInterceptor AuthInterceptor() {
+	public HandlerInterceptor authInterceptor() {
 		return new AuthInterceptor();
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry
-			.addInterceptor(LoginInterceptor())
+			.addInterceptor(loginInterceptor())
 			.addPathPatterns("/user/auth");
-		
+
 		registry
-			.addInterceptor(LogoutInterceptor())
+			.addInterceptor(logoutInterceptor())
 			.addPathPatterns("/user/logout");
 		
 		registry
-			.addInterceptor(AuthInterceptor())
+			.addInterceptor(authInterceptor())
 			.addPathPatterns("/**")
-			.excludePathPatterns("/assets/**","/user/auth","/user/logout");
+			.excludePathPatterns("/assets/**", "/user/auth", "/user/logout");
 	}
-	
-	
 }

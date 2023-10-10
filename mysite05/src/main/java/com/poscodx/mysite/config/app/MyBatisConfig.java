@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MyBatisConfig {
-	
+public class MyBatisConfig {	
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ApplicationContext applicationContext) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
 		sqlSessionFactory.setConfigLocation(applicationContext.getResource("classpath:com/poscodx/mysite/config/app/mybatis/configuration.xml"));
+		
 		return sqlSessionFactory.getObject();
 	}
 	
@@ -25,5 +25,4 @@ public class MyBatisConfig {
 	public SqlSession sqlSession(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
-
 }
