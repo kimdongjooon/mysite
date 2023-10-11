@@ -18,7 +18,7 @@ spring:
 #         exposeContextBeansAsAttributes: true
    web:
       resources:
-         static-locations: classpath:/assets/, file:/users/kdj/mysite-uploads/upload-images/
+         static-locations: classpath:/assets/, file:/users/kdj/mysite-uploads/
    
    #multipart
    servlet:
@@ -30,7 +30,7 @@ spring:
    # message resource(internationalization, i18n)
    messages:
       always-use-message-format: true
-      basenames: web/messages/messages
+      basename: web/messages/messages
       encoding: utf-8
    
    # datasource
@@ -60,3 +60,21 @@ server:
       encoding:
          charset: utf-8
          enabled: true
+         
+## logging
+#logging:
+#   pattern:
+#      file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
+#      console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
+#   logback:
+#      rollingpolicy:
+#         file-name-pattern: /users/kdj/${spring.application.name}-logs/exception.%d{yyyy-MM-dd}.%i.log.zip
+#         max-file-size: 200MB
+#         max-history: 10 
+#   file: /users/kdj/${spring.application.name}-logs/exception.log
+#   level:
+#      root: INFO
+#      com:
+#         poscodx:
+#            mysite:
+#               exception: ERROR
