@@ -19,7 +19,7 @@ import com.poscodx.mysite.security.SiteInterceptor;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"com.poscodx.mysite.controller","com.poscodx.mysite.exception"})
+@ComponentScan({"com.poscodx.jblog.controller","com.poscodx.jblog.exception"})
 @Import({MvcConfig.class, SecurityConfig.class, FileuploadConfig.class, MessageSourceConfig.class})
 public class WebConfig implements WebMvcConfigurer{
 	// SiteInterceptor
