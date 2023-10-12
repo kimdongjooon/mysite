@@ -16,7 +16,6 @@ import com.poscodx.mysite.config.web.SecurityConfig;
 import com.poscodx.mysite.event.ApplicationContextEventListener;
 import com.poscodx.mysite.security.SiteInterceptor;
 
-
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan({"com.poscodx.mysite.controller","com.poscodx.mysite.exception"})
