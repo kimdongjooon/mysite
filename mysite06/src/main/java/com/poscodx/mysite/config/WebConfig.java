@@ -22,41 +22,6 @@ import com.poscodx.mysite.security.LogoutInterceptor;
 @SpringBootConfiguration
 public class WebConfig implements WebMvcConfigurer {
 	
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		viewResolver.setExposeContextBeansAsAttributes(true);
-		viewResolver.setExposedContextBeanNames("site");
-				
-		return viewResolver;
-	}
-	
-	//
-	// Application ContextEvent Listener
-	//
-	@Bean
-	public ApplicationContextEventListener applicationContextEventListener() {
-		return new ApplicationContextEventListener();
-	}
-	
-	
-	//
-	// Argument Resolver
-	//
-	@Bean
-	public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
-		return new AuthUserHandlerMethodArgumentResolver();
-	}
-
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(handlerMethodArgumentResolver());
-	}
-	
-	
 	// Security Interceptors
 	@Bean
 	public HandlerInterceptor loginInterceptor() {
