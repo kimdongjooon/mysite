@@ -1,21 +1,13 @@
 package com.poscodx.mysite.config;
 
-import java.util.List;
-
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
-import com.poscodx.mysite.event.ApplicationContextEventListener;
 import com.poscodx.mysite.interceptor.SiteInterceptor;
 import com.poscodx.mysite.security.AuthInterceptor;
-import com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver;
 import com.poscodx.mysite.security.LoginInterceptor;
 import com.poscodx.mysite.security.LogoutInterceptor;
 
