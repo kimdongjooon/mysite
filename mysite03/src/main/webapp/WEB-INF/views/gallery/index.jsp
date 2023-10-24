@@ -63,6 +63,17 @@
 					</c:if>
 				</div>
 				<ul>
+					<c:forEach items="${list }" var="vo" varStatus="status">
+						<li>
+						<a	href="${pageContext.request.contextPath }${vo.image_url}"
+							class="image"
+							data-lightbox="gallery"
+							style="background-image:url('${pageContext.request.contextPath }${vo.image_url}')">&nbsp;</a>
+						<c:if test="${not empty authUser && authUser.role=='ADMIN' }">
+							<a	href="" class="del-button" title="삭제">삭제</a>
+						</c:if>
+					</li>
+					</c:forEach>
 					<li>
 						<a	href="${pageContext.request.contextPath }/assets/gallery-examples/im1.jpg"
 							class="image"
@@ -105,7 +116,7 @@
 							data-lightbox="gallery"
 							style="background-image:url('${pageContext.request.contextPath }/assets/gallery-examples/im5.jpg')">&nbsp;</a>
 						<c:if test="${not empty authUser && authUser.role=='ADMIN' }">
-							<a	href="" class="del-button" title="삭제">삭제</a>
+							<a	href="${pageContext.request.contextPath}/gallery/delete" class="del-button" title="삭제">삭제</a>
 						</c:if>
 					</li>
 									
@@ -116,8 +127,10 @@
 				<div id="dialog-upload-form" title="이미지 업로드" style="display: none">
 					<p class="validateTips normal">이미지와 간단한 코멘트를 입력해 주세요.</p>
 					<form action="${pageContext.request.contextPath }/gallery/upload" method="post" enctype="multipart/form-data">
-						<label>코멘트</label> <input type="text" id="input-comments" name="comment" value="">
-						<label>이미지</label> <input type="file" id="input-file" name="file"> 
+						<label>코멘트</label> 
+						<input type="text" id="input-comments" name="coment" value="">
+						<label>이미지</label> 
+						<input type="file" id="input-file" name="file"> 
 						<input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
 					</form>
 				</div>

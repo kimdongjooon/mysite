@@ -7,6 +7,7 @@
 		<typeAlias type="com.poscodx.mysite.vo.BoardVo" alias="boardvo"/>
 		<typeAlias type="com.poscodx.mysite.vo.PageVo" alias="pagevo"/>
 		<typeAlias type="com.poscodx.mysite.vo.SiteVo" alias="sitevo"/>
+		<typeAlias type="com.poscodx.mysite.vo.GalleryVo" alias="galleryvo"/>
     </typeAliases>
     	
 	<mappers>
@@ -14,5 +15,6 @@
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
 		<mapper resource="mybatis/mappers/admin.xml" />
+		<mapper resource="mybatis/mappers/gallery.xml" />
 	</mappers>
 </configuration>
