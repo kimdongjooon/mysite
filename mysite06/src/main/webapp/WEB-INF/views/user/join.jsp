@@ -14,82 +14,104 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+var messageBox = function(title, message, callback) {
+	$("#dialog").attr('title', title);
+	$("#dialog p").text(message);
+	$("#dialog").dialog({
+		width: 340,
+		modal: true,
+		buttons: {
+			"확인": function() {
+				$(this).dialog("close");
+			}
+		},
+		close: callback
+	});			
+}
+
 $(function(){
-	#('#join-form').submit(function(event){
+	$("#join-form").submit(function(event){
 		event.preventDefault();
 		
 		//1. 이름
-		if($('#name').val === ' '){
-			$('#dialog').attr('title','회원가입.'))ㅣ
-			$('#dialog p').attr('title','회원가입.'))ㅣ
-			$('#dialog').attr('title','회원가입.'))ㅣ
-		}
-		
-		//2. 이메일 이미지.
-		if(!$('#img-check-mail').is(':visible')){
-			messageBox('회원가입','이메일 중복을 확인해 주세요.');
-		}
-		
-		//3. 이메일 중복 체크
-		if(!$('#img-check-mail').is(':visible')){
-			messageBox('회원가입','이메일 중복을 확인해 주세요.');
-		}
-		
-		//4. 
-		
-		
-		//5. ok
-		$(this)[0].submit();
-	});
-	
-	$('#email').change(function(){
-		$('#img-check-email').hide();
-		$('#btn-check-email').show();
-	});
-	
-	$('#btn-check-email').click(function(){
-		var email = $('#email').val();
-		if(email === ''){
+		if($("#name").val() === '') {
+			messageBox('회원가입', '이름은 필수 항목 입니다.', function() {
+				$("#name").focus();
+			});
 			return;
 		}
 		
+		//2. 이메일
+		if($("#email").val() === '') {
+			messageBox('회원가입', '이메일은 필수 항목 입니다.', function() {
+				$("#name").focus();
+			});
+			return;
+		}
+		
+		//3. 이메일 중복 체크
+		if(!$("#img-check-email").is(':visible')) {
+			messageBox('회원가입', '이메일 중복 확인을 해주세요.');
+			return
+		}
+		
+		//4. 비밀번호
+		if($("#password").val() === '') {
+			messageBox('회원가입', '비밀번호는 필수 항목 입니다.', function() {
+				$("#password").focus();
+			});
+			return;
+		}
+		
+		//5. ok
+		this.submit();
+	});
+	
+	$("#email").change(function() {
+		$('#img-check-email').hide();
+		$('#btn-check-email').show();				
+	});
+	
+	$('#btn-check-email').click(function() {
+		var email = $('#email').val();
+		if(email === '') {
+			return;
+		}
+
 		$.ajax({
-			url:'${pageContext.request.contextPath }/api/user?email='+email,
+			url: '${pageContext.request.contextPath }/api/user?email=' + email,
 			type: 'get',
 			dataType: 'json',
-			success: function(response){
-				if(response.result !== 'success'){
-					console.log(response.message);
+			success: function(response) {
+				if(response.result !== 'success') {
+					console.error(reponse.message);
 					return;
 				}
 				
-				if(response.data){
+				if(response.data) {
 					$("#dialog").dialog({
-						width:200,
-						modal:true,
-						buttons:{
-							"확인":function(){
+						width: 340,
+						modal: true,
+						buttons: {
+							"확인": function() {
 								$(this).dialog("close");
 							}
 						},
-						close:function(){
+						close: function() {
 							$("#email").val('').focus();
 						}
 					});
-					
-					
 					
 					return;
 				}
 				
 				$('#img-check-email').show();
 				$('#btn-check-email').hide();
-				console.log(response);
 			},
-			error: function(xhr, status, e){
-				console.error(staus, e);
+			error: function(xhr, status, e) {
+				console.error(status, e);
 			}
-		})
+		});
 	});
 });
 </script>
