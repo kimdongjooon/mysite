@@ -25,6 +25,13 @@ public class GuestbookController {
 		model.addAttribute("list", list);
 		return "guestbook/main";
 	}
+	
+	@RequestMapping("/ajax")
+	public String ajax(Model model) {
+		List<GuestbookVo> list = guestbookService.getContentsList();
+		model.addAttribute("list", list);
+		return "guestbook/main-ajax";
+	}
 
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
 	public String delete(@PathVariable("no") Long no, Model model) {

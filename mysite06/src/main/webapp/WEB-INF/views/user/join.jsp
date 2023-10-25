@@ -10,6 +10,89 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(function(){
+	#('#join-form').submit(function(event){
+		event.preventDefault();
+		
+		//1. 이름
+		if($('#name').val === ' '){
+			$('#dialog').attr('title','회원가입.'))ㅣ
+			$('#dialog p').attr('title','회원가입.'))ㅣ
+			$('#dialog').attr('title','회원가입.'))ㅣ
+		}
+		
+		//2. 이메일 이미지.
+		if(!$('#img-check-mail').is(':visible')){
+			messageBox('회원가입','이메일 중복을 확인해 주세요.');
+		}
+		
+		//3. 이메일 중복 체크
+		if(!$('#img-check-mail').is(':visible')){
+			messageBox('회원가입','이메일 중복을 확인해 주세요.');
+		}
+		
+		//4. 
+		
+		
+		//5. ok
+		$(this)[0].submit();
+	});
+	
+	$('#email').change(function(){
+		$('#img-check-email').hide();
+		$('#btn-check-email').show();
+	});
+	
+	$('#btn-check-email').click(function(){
+		var email = $('#email').val();
+		if(email === ''){
+			return;
+		}
+		
+		$.ajax({
+			url:'${pageContext.request.contextPath }/api/user?email='+email,
+			type: 'get',
+			dataType: 'json',
+			success: function(response){
+				if(response.result !== 'success'){
+					console.log(response.message);
+					return;
+				}
+				
+				if(response.data){
+					$("#dialog").dialog({
+						width:200,
+						modal:true,
+						buttons:{
+							"확인":function(){
+								$(this).dialog("close");
+							}
+						},
+						close:function(){
+							$("#email").val('').focus();
+						}
+					});
+					
+					
+					
+					return;
+				}
+				
+				$('#img-check-email').show();
+				$('#btn-check-email').hide();
+				console.log(response);
+			},
+			error: function(xhr, status, e){
+				console.error(staus, e);
+			}
+		})
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
@@ -38,7 +121,8 @@
 					
 					<label class="block-label" for="email">이메일</label>
 					<form:input path="email" />
-					<input type="button" value="중복체크">
+					<input id='btn-check-email' type="button" value="중복체크">
+					<img id='img-check-email' style = "display: none" src="${pageContext.request.contextPath }/assets/images/check.png">
 					<p style="padding:3px 0 5px 0; text-align: left; color: #f00">
 						<form:errors path="email" />
 					</p>
@@ -69,5 +153,9 @@
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
+	<div id="dialog" title="이메일 중복 체크">
+  		<p>현재 사용중인 이메일입니다.</p>
+	</div>
+ 
 </body>
 </html>
