@@ -3,6 +3,7 @@ package com.poscodx.mysite.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +34,15 @@ public class GuestbookController {
 	public JsonResult post(
 			@RequestBody GuestbookVo vo
 			) {
-		guestbookService.addContents(vo);
-		return JsonResult.success(vo);
-		
+		GuestbookVo reg_vo = guestbookService.addContents(vo);
+		return JsonResult.success(reg_vo);
+	}
+	
+	@DeleteMapping
+	public JsonResult delete(
+			@RequestBody GuestbookVo vo
+			) {
+		boolean result = guestbookService.deleteContents(vo.getNo(), vo.getPassword());
+		return JsonResult.success(result);
 	}
 }

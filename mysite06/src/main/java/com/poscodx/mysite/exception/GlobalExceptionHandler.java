@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 		// html요청: accept에 application/json(x)
 		String accept = request.getHeader("accept");
 		
-		// .* 는 모든문자라는 뜻. 
+		// .* 는 모든문자라는 뜻. 즉 application/json 양옆의 모든 문자들. 
 		if(accept.matches(".*application/json.*")) {
 			
 		}

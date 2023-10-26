@@ -19,6 +19,16 @@
 		]]>
 	</insert>
 
+	<select id="reg_visiter" resultType="guestbookVo">
+		<![CDATA[
+		  select no, name, contents, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate 
+		    from guestbook 
+        order by reg_date desc
+        limit 0,1
+		]]>
+	</select>
+	
+	
 	<delete id="deleteByNoAndPassword" parameterType="map">
 		<![CDATA[
 		delete

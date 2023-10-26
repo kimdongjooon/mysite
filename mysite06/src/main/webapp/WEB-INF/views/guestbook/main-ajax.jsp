@@ -20,7 +20,7 @@ var render = function(vo, mode){
 		"<strong>"+vo.name+" ("+vo.regDate+")</strong>"+
 		"<p>"+vo.contents+"</p>"+
 		"<strong></strong>"+
-		"<a href='#' data-no=''>삭제</a>"+ 
+		"<a href='#' data-no='"+vo.no+"'>삭제</a>"+ 
 		"</li>"
 		
 	$("#list-guestbook")[mode ? 'prepend':'append'](html);
@@ -79,6 +79,69 @@ $(function(){
 		})	
 	})
 
+});
+
+$(function(){
+	var dialogDelete = $("#dialog-delete-form").dialog({
+		autoOpen: false,
+		model: true,
+		buttons:{
+			'삭제': function(){
+				var vo ={};
+				vo.no = $("#hidden-no").val();
+				vo.password = $("#password-delete").val();
+				console.log(vo);
+				
+				// 후처리.
+				// 1. response.data 가지고 있는 <li data-no='{no}' > 찾아서 삭제.
+				// 2. dialogDelete.dialog('close');
+				$.ajax({
+					url: '${pageContext.request.contextPath}/api/guestbook',
+					type: 'delete',
+					dataType: 'Json',
+					contentType: 'application/json',
+					data: JSON.stringify(vo),
+					success: function(response){
+						if(response.result === 'fail'){
+							console.error(response.message);
+							return;
+						}
+						
+						//render(response.data, true);
+						console.log(response);
+						fetch();
+					}
+					
+				})
+				// $(this).dialog("ajax 삭제", no, password);
+				
+				
+				
+				// 폼의 input value reset;
+			},
+			'취소': function(){
+				$(this).dialog("close");
+			}
+		},
+		close: function(){
+			console.log("dialog close");
+		}
+	});
+	
+	
+	// 메시지 삭제 버튼 click 이벤트 처리(Live Event)
+	$(document).on('click','#list-guestbook li a',function(event){
+		event.preventDefault();
+		
+		$("#hidden-no").val($(this).attr('data-no'));
+		
+		console.log($(this).attr('data-no'));
+		dialogDelete.dialog('open');
+	});
+	
+	//최초 리스트 가져오기.
+	fetch();
+	
 });
 </script>
 
