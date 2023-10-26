@@ -72,7 +72,7 @@ $(function(){
 					return;
 				}
 				
-				render(re)
+				render(response.data, true);
 				console.log(response);
 			}
 			
