@@ -71,8 +71,11 @@ $(function(){
 					console.error(response.message);
 					return;
 				}
-				
+				$("#input-name").val("");
+				$("#input-password").val("");
+				$("#tx-content").val("");
 				render(response.data, true);
+				
 				console.log(response);
 			}
 			
@@ -107,9 +110,16 @@ $(function(){
 							return;
 						}
 						
+						if(response.data == true){
+							$("li[data-no="+vo.no+"]").remove();
+							dialogDelete.dialog("close");
+						}
+						if(response.data == false){
+							$("p.validateTips.error").css("display","block");
+						}
+						
 						//render(response.data, true);
-						console.log(response);
-						fetch();
+						
 					}
 					
 				})
@@ -164,12 +174,13 @@ $(function(){
 			</div>
 			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
   				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
-  				<p class="validateTips error" style="display:none">비밀번호가 틀립니다.</p>
   				<form>
  					<input type="password" id="password-delete" value="" class="text ui-widget-content ui-corner-all">
 					<input type="hidden" id="hidden-no" value="">
 					<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
   				</form>
+  				<p class="validateTips error" style="display:none" >비밀번호가 틀립니다.</p>
+  				
 			</div>
 			<div id="dialog-message" title="" style="display:none">
   				<p></p>
