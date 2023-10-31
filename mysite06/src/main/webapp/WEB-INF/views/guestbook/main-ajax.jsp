@@ -14,6 +14,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 // 방명록 리스트 불러와서 모두 추가하기.
+var pagecount=0;
 var render = function(vo, mode){
 	var html = 
 		"<li data-no='"+vo.no+"'>"+
@@ -26,7 +27,7 @@ var render = function(vo, mode){
 	$("#list-guestbook")[mode ? 'prepend':'append'](html);
 }
 
-var fetch = function(){
+var fetch = function(n){
 	$.ajax({
 		url: "${pageContext.request.contextPath}/api/guestbook",
 		type: "get",
@@ -37,17 +38,24 @@ var fetch = function(){
 				return;
 			}
 			
-			response.data.forEach(function(vo){
-				console.log(vo);
+			let i = 10*n;
+			if(i<=response.data.length){
+				for( i; i < response.data.length; i++){
+					console.log(response.data[i]);
+					render(response.data[i], false);
+				}
+			}
+			
+			/* response.data.forEach(function(vo){
 				render(vo, false);
-			})
+			}) */
 		}
 	})	
 }
 
 //최초 리스트 가져오기.
 $(function(){
-	fetch();
+	fetch(pagecount);
 })
 
 //새로운 방명록 방문자 추가. 
@@ -148,10 +156,32 @@ $(function(){
 		console.log($(this).attr('data-no'));
 		dialogDelete.dialog('open');
 	});
+
 	
-	//최초 리스트 가져오기.
-	fetch();
-	
+});
+
+// 스크롤기능 추가. 
+$(function(){
+	$(window).scroll(function(){
+		
+		var $window = $(this);
+		var $document = $(document);
+		
+		var wh = $window.height();
+		var dh = $document.height();
+		var st = $window.scrollTop();
+		
+		console.log("wh + st : "+(wh + st)+ "("+wh +":"+st+")");
+		console.log("dh: "+dh);
+		if(dh <= wh + st+ 0.5){
+			// 제일 밑으로 내려왔을때 내용 10개 더 추가.
+			pagecount++;
+			fetch(pagecount);
+			console.log("fetch!!");
+			
+		}
+	});
+
 });
 </script>
 
