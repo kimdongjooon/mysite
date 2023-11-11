@@ -11,3 +11,6 @@
 **/.classpath
 **/.project
 /.metadata/
+
+## node
+**/node_modules
